@@ -1,4 +1,4 @@
-# lp-heuristics
+# Link prediction heuristics
 This repository contains the code for reproducing the results in the paper "On the importance of link prediction heuristics for temporal graph benchmark".
 
 ## Reproducibility
