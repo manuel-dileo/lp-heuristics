@@ -7,6 +7,6 @@ To run a certain heuristic on a dataset, you can use the following script:
 dataset="tgbl-wiki"
 heuristic="PA"
 
-python run.py --dataset_name "$dataset" --heuristic "$heuristic"
+python run.py --dataset $dataset --heuristic $heuristic
 ```
 The above script runs and evaluates Preferential Attachment on the `tgbl-wiki` dataset.
