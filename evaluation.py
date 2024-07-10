@@ -1,4 +1,4 @@
-from tgl_heuristic import CN, AA, RA, PA
+from heuristic import CN, AA, RA, PA
 from torch_geometric.data import Data
 import torch
 import numpy as np
@@ -8,7 +8,7 @@ from tqdm import tqdm
 def evaluate_heuristic_tgb(evaluator, heuristic, dataset, mask, split_mode='test', recent_edges=False):
     
     num_nodes = dataset.get_TemporalData().num_nodes
-    if !recent_edges:
+    if not recent_edges:
         data = Data(edge_index=torch.stack((dataset.src[dataset.train_mask], dataset.dst[dataset.train_mask])), num_nodes = num_nodes)
     else:
         data = Data(edge_index=torch.stack((dataset.src[dataset.val_mask], dataset.dst[dataset.val_mask])), num_nodes = num_nodes)

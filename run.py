@@ -1,6 +1,7 @@
 import argparse
-from heuristic import RA,PA,AA,CN
-from evaluation import evaluate_heuristic
+import heuristic
+#from heuristic import RA,PA,AA,CN
+from evaluation import evaluate_heuristic_tgb
 
 import scipy.sparse as ssp
 import torch
@@ -24,12 +25,11 @@ parser.add_argument('--dataset', choices=['tgbl-wiki', 'tgbl-review', 'tgbl-coin
 parser.add_argument('--use_recent_edges', action='store_true',
                     help='Flag to indicate whether to use recent edges only')
 
-
 if __name__=='__main__':
     args = parser.parse_args()
     
     # Accessing the selected options
-    heuristic = args.heuristic
+    heuristic_name = args.heuristic
     name = args.dataset
     
     dataset = PyGLinkPropPredDataset(name=name, root="datasets")
@@ -38,6 +38,10 @@ if __name__=='__main__':
     
     evaluator = Evaluator(name=name)
     
-    mrr_test = evaluate_heuristic_tgb(evaluator, RA, dataset, dataset.test_mask, split_mode='test', recent_edges=args.use_recent_edges)
+    mrr_val = evaluate_heuristic_tgb(evaluator, getattr(heuristic, heuristic_name), dataset, dataset.val_mask, split_mode='val', recent_edges=args.use_recent_edges)
     
-    print(f'{heuristic} on {name} MRR Test: {mrr_test}')
+    print(f'{heuristic_name} on {name} MRR Dev: {mrr_val}')
+    
+    mrr_test = evaluate_heuristic_tgb(evaluator, getattr(heuristic, heuristic_name), dataset, dataset.test_mask, split_mode='test', recent_edges=args.use_recent_edges)
+    
+    print(f'{heuristic_name} on {name} MRR Test: {mrr_test}')
